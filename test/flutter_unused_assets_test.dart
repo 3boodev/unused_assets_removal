@@ -1,0 +1,66 @@
+import 'dart:io';
+
+import 'package:flutter_unused_assets/src/asset_reporter.dart';
+import 'package:flutter_unused_assets/src/asset_scanner.dart';
+import 'package:flutter_unused_assets/src/reference_scanner.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('AssetScanner', () {
+    late Directory tempDir;
+
+    setUp(() async {
+      tempDir = await Directory.systemTemp.createTemp('flutter_project_');
+      final assetsDir = Directory('${tempDir.path}/assets/images')..createSync(recursive: true);
+      final imageFile = File('${assetsDir.path}/photo.png');
+      await imageFile.writeAsBytes([0, 1, 2, 3]); // محتوى وهمي للصورة
+    });
+
+    tearDown(() async {
+      await tempDir.delete(recursive: true);
+    });
+
+    test('scan returns a set of assets', () async {
+      final assetScanner = AssetScanner(tempDir.path);
+      final assets = await assetScanner.scan();
+      expect(assets.contains('assets/images/photo.png'), true);
+    });
+  });
+
+  group('ReferenceScanner', () {
+    late Directory tempDir;
+
+    setUp(() async {
+      tempDir = await Directory.systemTemp.createTemp('flutter_project_');
+      final libDir = Directory('${tempDir.path}/lib')..createSync(recursive: true);
+      final dartFile = File('${libDir.path}/main.dart');
+      await dartFile.writeAsString('''
+        import 'package:flutter/widgets.dart';
+        void main() {
+          var image = Image.asset('assets/images/photo.png');
+        }
+      ''');
+    });
+
+    tearDown(() async {
+      await tempDir.delete(recursive: true);
+    });
+
+    test('scan returns a set of used assets', () async {
+      final referenceScanner = ReferenceScanner(tempDir.path);
+      final usedAssets = await referenceScanner.scan();
+
+      expect(usedAssets.contains('assets/images/photo.png'), true);
+    });
+  });
+
+  group('AssetReporter', () {
+    test('report prints unused assets', () {
+      final unusedAssets = <String>{'assets/images/photo.png'};
+      final reporter = AssetReporter('test_project_path');
+
+      // مافيش assertion هنا لأن الـ report بيطبع فقط.
+      reporter.report(unusedAssets);
+    });
+  });
+}
