@@ -1,9 +1,9 @@
 name: unused_assets_removal
 description: >
   A CLI tool to detect and optionally delete unused asset files in your Flutter project, helping you reduce app size and clean up unnecessary files.
-version: 0.1.0
-homepage: https://github.com/your-username/flutter_unused_assets
-repository: https://github.com/your-username/flutter_unused_assets
+version: 0.0.1
+homepage: https://github.com/3boodev/unused_assets_removal
+repository: https://github.com/3boodev/unused_assets_removal
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -16,7 +16,7 @@ dev_dependencies:
   test: ^1.25.0
 
 executables:
-  flutter_unused_assets: bin/unused_assets_removal.dart
+  unused_assets_removal: unused_assets_removal
 
 # Optional: You can define topics (for pub.dev discoverability)
 topics:
@@ -26,8 +26,6 @@ topics:
   - cleanup
   - optimization
 
-# Include all Dart files
-publish_to: 'https://pub.dev'
 
 # Exclude any unnecessary files from the package
 false_secrets:
