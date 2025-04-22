@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:args/args.dart';
-import 'package:flutter_unused_assets/src/asset_reporter.dart';
-import 'package:flutter_unused_assets/src/asset_scanner.dart';
-import 'package:flutter_unused_assets/src/reference_scanner.dart';
+import 'package:unused_assets_removal/src/asset_reporter.dart';
+import 'package:unused_assets_removal/src/asset_scanner.dart';
+import 'package:unused_assets_removal/src/reference_scanner.dart';
 
 void main(List<String> arguments) async {
   final parser = ArgParser()
