@@ -28,12 +28,12 @@ dart pub get
 1. Detect unused assets
 
 ```bash
-   dart run bin/main.dart -p /path/to/flutter/project
+   dart run bin/unused_assets_removal.dart -p /path/to/flutter/project
 ```
 2. Delete unused assets
 
 ```bash
-   dart run bin/main.dart -p /path/to/flutter/project --delete
+   dart run bin/unused_assets_removal.dart -p /path/to/flutter/project --delete
 ```
 CLI Options:
 
@@ -60,7 +60,7 @@ Want to help improve it? Contributions are welcome! 🙌
 ## ✅ Example
 
 ```bash
-   dart run bin/main.dart -p ~/projects/my_app
+   dart run bin/unused_assets_removal.dart -p ~/projects/my_app
 ```
 
 ## Output:
@@ -75,7 +75,7 @@ Unused assets:
 ## To delete them:
 
 ```bash
-dart run bin/main.dart -p ~/projects/my_app --delete
+dart run bin/unused_assets_removal.dart -p ~/projects/my_app --delete
 ```
 ## 📌 Roadmap
 

@@ -13,7 +13,7 @@ void main() {
       tempDir = await Directory.systemTemp.createTemp('flutter_project_');
       final assetsDir = Directory('${tempDir.path}/assets/images')..createSync(recursive: true);
       final imageFile = File('${assetsDir.path}/photo.png');
-      await imageFile.writeAsBytes([0, 1, 2, 3]); // محتوى وهمي للصورة
+      await imageFile.writeAsBytes([0, 1, 2, 3]);
     });
 
     tearDown(() async {
@@ -33,7 +33,7 @@ void main() {
     setUp(() async {
       tempDir = await Directory.systemTemp.createTemp('flutter_project_');
       final libDir = Directory('${tempDir.path}/lib')..createSync(recursive: true);
-      final dartFile = File('${libDir.path}/main.dart');
+      final dartFile = File('${libDir.path}/unused_assets_removal.dart');
       await dartFile.writeAsString('''
         import 'package:flutter/widgets.dart';
         void main() {
@@ -59,7 +59,6 @@ void main() {
       final unusedAssets = <String>{'assets/images/photo.png'};
       final reporter = AssetReporter('test_project_path');
 
-      // مافيش assertion هنا لأن الـ report بيطبع فقط.
       reporter.report(unusedAssets);
     });
   });

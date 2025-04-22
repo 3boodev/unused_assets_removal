@@ -16,7 +16,7 @@ dev_dependencies:
   test: ^1.25.0
 
 executables:
-  flutter_unused_assets: bin/main.dart
+  flutter_unused_assets: bin/unused_assets_removal.dart
 
 # Optional: You can define topics (for pub.dev discoverability)
 topics:
