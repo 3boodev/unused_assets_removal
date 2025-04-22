@@ -1,4 +1,4 @@
-# 🧹 flutter_unused_assets
+# 🧹 unused_assets_removal
 
 A CLI tool to scan and delete unused asset files in your Flutter project. Optimize your app size and keep your project clean!
 
@@ -18,8 +18,8 @@ A CLI tool to scan and delete unused asset files in your Flutter project. Optimi
 Clone the repo locally and run it directly using Dart:
 
 ```bash
-git clone https://github.com/your-username/flutter_unused_assets.git
-cd flutter_unused_assets
+git clone https://github.com/3boodev/unused_assets_removal
+cd unused_assets_removal
 dart pub get
 ```
 
@@ -28,12 +28,12 @@ dart pub get
 1. Detect unused assets
 
 ```bash
-   dart run bin/flutter_unused_assets.dart -p /path/to/flutter/project
+   dart run bin/main.dart -p /path/to/flutter/project
 ```
 2. Delete unused assets
 
 ```bash
-   dart run bin/flutter_unused_assets.dart -p /path/to/flutter/project --delete
+   dart run bin/main.dart -p /path/to/flutter/project --delete
 ```
 CLI Options:
 
@@ -60,7 +60,7 @@ Want to help improve it? Contributions are welcome! 🙌
 ## ✅ Example
 
 ```bash
-   dart run bin/flutter_unused_assets.dart -p ~/projects/my_app
+   dart run bin/main.dart -p ~/projects/my_app
 ```
 
 ## Output:
@@ -75,7 +75,7 @@ Unused assets:
 ## To delete them:
 
 ```bash
-dart run bin/flutter_unused_assets.dart -p ~/projects/my_app --delete
+dart run bin/main.dart -p ~/projects/my_app --delete
 ```
 ## 📌 Roadmap
 
@@ -85,6 +85,7 @@ dart run bin/flutter_unused_assets.dart -p ~/projects/my_app --delete
 
 ## 👨‍💻 Author
 
+<a href="https://github.com/3boodev">Abdullah Alamary</a>
 
 ## 📝 License
 
