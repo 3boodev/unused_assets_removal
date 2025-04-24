@@ -22,6 +22,13 @@ git clone https://github.com/3boodev/unused_assets_removal
 cd unused_assets_removal
 dart pub get
 ```
+## - OR ADD TO dev_dependencies in pubspec.yaml
+```bash
+  dev_dependencies:
+  flutter_project_booster:
+  git:
+  url: https://github.com/3boodev/flutter_project_booster
+```
 
 ## 🛠 Usage
 
@@ -35,7 +42,7 @@ dart pub get
 ```bash
    dart run bin/unused_assets_removal.dart -p /path/to/flutter/project --delete
 ```
-CLI Options:
+## 🧾CLI Options:
 
 Option | Alias | Description
 --path | -p | Path to your Flutter project (required)
@@ -85,7 +92,7 @@ dart run bin/unused_assets_removal.dart -p ~/projects/my_app --delete
 
 ## 👨‍💻 Author
 
-<a href="https://github.com/3boodev">Abdullah Alamary</a>
+- Built with ❤️ by <a href="https://github.com/3boodev">Abdullah Alamary</a>
 
 ## 📝 License
 
