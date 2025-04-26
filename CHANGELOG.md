@@ -17,3 +17,7 @@
 ## 0.0.5
 
 * USE Our Package as Globally .
+
+## 0.0.6
+
+* Upgrade Usage Documentation to USE Our Package as Globally .

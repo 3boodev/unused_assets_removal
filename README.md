@@ -34,7 +34,7 @@ dart pub get
   dart pub global activate unused_assets_removal
 ```
 
-## 🛠 Usage
+## 🛠 Usage (with out 'dart run' If your Use Globally)
 
 1. Detect unused assets
 
