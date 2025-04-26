@@ -1,65 +1,73 @@
 import 'dart:io';
-
-import 'package:unused_assets_removal/src/asset_reporter.dart';
-import 'package:unused_assets_removal/src/asset_scanner.dart';
-import 'package:unused_assets_removal/src/reference_scanner.dart';
 import 'package:test/test.dart';
+import 'package:unused_assets_removal/unused_assets_remover.dart';
 
 void main() {
-  group('AssetScanner', () {
-    late Directory tempDir;
+  late Directory tempDir;
+  late Directory assetsDir;
+  late File usedAsset;
+  late File unusedAsset;
+  late File dartFile;
 
-    setUp(() async {
-      tempDir = await Directory.systemTemp.createTemp('flutter_project_');
-      final assetsDir = Directory('${tempDir.path}/assets/images')..createSync(recursive: true);
-      final imageFile = File('${assetsDir.path}/photo.png');
-      await imageFile.writeAsBytes([0, 1, 2, 3]);
-    });
+  setUp(() async {
+    // Create temporary test project
+    tempDir = Directory.systemTemp.createTempSync('test_project_');
 
-    tearDown(() async {
-      await tempDir.delete(recursive: true);
-    });
+    // Create assets directory
+    assetsDir = Directory('${tempDir.path}/assets');
+    assetsDir.createSync(recursive: true);
 
-    test('scan returns a set of assets', () async {
-      final assetScanner = AssetScanner(tempDir.path);
-      final assets = await assetScanner.scan();
-      expect(assets.contains('assets/images/photo.png'), true);
-    });
+    // Create used asset file
+    usedAsset = File('${assetsDir.path}/used.png')..writeAsBytesSync([0, 1, 2]);
+
+    // Create unused asset file
+    unusedAsset = File('${assetsDir.path}/unused.png')..writeAsBytesSync([3, 4, 5]);
+
+    // Create Dart file that uses one asset
+    dartFile = File('${tempDir.path}/lib/main.dart');
+    dartFile.createSync(recursive: true);
+    dartFile.writeAsStringSync('''
+    import 'package:flutter/material.dart';
+    final image = AssetImage('assets/used.png');
+    ''');
   });
 
-  group('ReferenceScanner', () {
-    late Directory tempDir;
-
-    setUp(() async {
-      tempDir = await Directory.systemTemp.createTemp('flutter_project_');
-      final libDir = Directory('${tempDir.path}/lib')..createSync(recursive: true);
-      final dartFile = File('${libDir.path}/unused_assets_removal.dart');
-      await dartFile.writeAsString('''
-        import 'package:flutter/widgets.dart';
-        void main() {
-          var image = Image.asset('assets/images/photo.png');
-        }
-      ''');
-    });
-
-    tearDown(() async {
-      await tempDir.delete(recursive: true);
-    });
-
-    test('scan returns a set of used assets', () async {
-      final referenceScanner = ReferenceScanner(tempDir.path);
-      final usedAssets = await referenceScanner.scan();
-
-      expect(usedAssets.contains('assets/images/photo.png'), true);
-    });
+  tearDown(() {
+    tempDir.deleteSync(recursive: true);
   });
 
-  group('AssetReporter', () {
-    test('report prints unused assets', () {
-      final unusedAssets = <String>{'assets/images/photo.png'};
-      final reporter = AssetReporter('test_project_path');
+  test('Dry run lists unused assets without deleting', () async {
+    final logFile = File('${tempDir.path}/dry_run_log.txt');
 
-      reporter.report(unusedAssets);
-    });
+    await cleanUnusedAssets(
+      assetsPath: assetsDir.path,
+      dryRun: true,
+      deleteFiles: false,
+      logPath: logFile.path,
+    );
+
+    expect(unusedAsset.existsSync(), isTrue);
+    expect(usedAsset.existsSync(), isTrue);
+    expect(logFile.existsSync(), isTrue);
+
+    final logContent = logFile.readAsStringSync();
+    expect(logContent.contains('unused.png'), isTrue);
+    expect(logContent.contains('used.png'), isFalse);
+  });
+
+  test('Delete mode removes unused assets after confirmation', () async {
+    // Simulate delete without asking user (skip stdin for testing)
+    await cleanUnusedAssets(
+      assetsPath: assetsDir.path,
+      dryRun: false,
+      deleteFiles: true,
+      logPath: '${tempDir.path}/delete_log.txt',
+    );
+
+    // The unused file should be deleted
+    expect(unusedAsset.existsSync(), isFalse);
+
+    // The used file should still exist
+    expect(usedAsset.existsSync(), isTrue);
   });
 }
