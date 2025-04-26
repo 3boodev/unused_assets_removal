@@ -31,7 +31,7 @@ dart pub get
 ```
 ## - OR USE It as Globally
 ```bash
-  dart pub global activate flutter_unused_assets_cleaner
+  dart pub global activate unused_assets_removal
 ```
 
 ## 🛠 Usage
