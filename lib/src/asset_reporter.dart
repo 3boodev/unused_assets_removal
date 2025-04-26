@@ -1,4 +1,3 @@
-import 'dart:io';
 
 class AssetReporter {
   final String projectPath;

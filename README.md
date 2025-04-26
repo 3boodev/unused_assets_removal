@@ -25,9 +25,13 @@ dart pub get
 ## - OR ADD TO dev_dependencies in pubspec.yaml
 ```bash
   dev_dependencies:
-  unused_assets_removal:
-  git:
-  url: https://github.com/3boodev/unused_assets_removal
+    unused_assets_removal:
+     git:
+      url: https://github.com/3boodev/unused_assets_removal
+```
+## - OR USE It as Globally
+```bash
+  dart pub global activate flutter_unused_assets_cleaner
 ```
 
 ## 🛠 Usage
@@ -35,12 +39,22 @@ dart pub get
 1. Detect unused assets
 
 ```bash
-   dart run unused_assets_removal
+   dart run unused_assets_removal --dry-run
 ```
 2. Delete unused assets
 
 ```bash
    dart run unused_assets_removal --delete
+```
+3. Change Assets path to your Flutter project
+
+```bash
+   dart run unused_assets_removal --assets-path=assets/images
+```
+4. Set Location of Assets report
+
+```bash
+   dart run unused_assets_removal --dry-run --log-path=report.txt
 ```
 ## 🧾CLI Options:
 
